@@ -7,19 +7,25 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.uxstate.raych.ui.theme.RaychTheme
+import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Timber.plant(Timber.DebugTree())
         setContent {
             RaychTheme {
 
+                var fact by remember {
+                    mutableStateOf("")
+                }
                 val factsAboutRay = listOf<String>(
                         "She is a Savage",
                         "She is Cute",
@@ -30,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         "She does White Roses"
                 )
 
-var fact = ""
+
                 Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
@@ -40,7 +46,7 @@ var fact = ""
 
 
 
-
+                    Text(text = fact)
 
 
                     //Space
@@ -56,6 +62,7 @@ var fact = ""
 
                         fact = factsAboutRay.random()
 
+                        Timber.i("Button clicked - value is $fact")
 
 
                     }
@@ -79,8 +86,4 @@ var fact = ""
 }
 
 
-@Composable
-fun FactAboutRachel(fact: String) {
-    Text(text = fact)
-}
 
